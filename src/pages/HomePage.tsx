@@ -40,12 +40,6 @@ export const HomePage: React.FC = () => {
             Answer questions about your business and get a structured marketing plan with specific recommendations for each area of your strategy.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link to="/questionnaire?new=true">
-              <Button size="lg" className="flex items-center">
-                Get Started
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
             <div className="flex items-center text-neutral-500 dark:text-neutral-400">
               <Clock className="h-4 w-4 mr-2" />
               <span>15-20 minutes</span>

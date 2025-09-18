@@ -173,10 +173,13 @@ export const QuestionnairePage: React.FC = () => {
           <div className="flex justify-between items-center h-18">
             <Link to="/" className="flex items-center hover:opacity-80 transition-opacity group">
               <ArrowLeft className="h-5 w-5 text-gray-600 mr-3 group-hover:text-blue-600 transition-colors" />
-              <div className="p-2 bg-blue-600 rounded-xl mr-3">
-                <Target className="h-6 w-6 text-white" />
+              <div>
+                <img
+                  src="/Beamx-Logo-Colour.png"
+                  alt="BeamX Solutions Logo"
+                  className="h-12 w-auto max-w-[200px] transition-transform duration-300 hover:scale-105"
+                />
               </div>
-              <span className="text-2xl font-bold text-gray-900">MarketingPlan.ai</span>
             </Link>
             <div className="flex items-center space-x-4">
               <div className="text-sm text-gray-600 font-medium bg-gray-100 px-4 py-2 rounded-full">
