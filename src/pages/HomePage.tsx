@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { DarkModeToggle } from '../components/DarkModeToggle';
+import { ApiStatus } from '../components/ApiStatus';
 import { Target, ArrowRight, FileText, Clock, Users } from 'lucide-react';
 
 export const HomePage: React.FC = () => {
@@ -21,6 +22,7 @@ export const HomePage: React.FC = () => {
               </div>
             </div>
             <div className="flex items-center space-x-4">
+              <ApiStatus />
               <DarkModeToggle />
               <Link to="/questionnaire">
                 <Button>Create Plan</Button>

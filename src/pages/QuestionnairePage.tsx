@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { QuestionStep } from '../components/QuestionStep';
 import { ProgressBar } from '../components/ProgressBar';
 import { DarkModeToggle } from '../components/DarkModeToggle';
+import { ApiStatus } from '../components/ApiStatus';
 import { getAllQuestions } from '../data/questions';
 import { marketingSquares } from '../data/marketingSquares';
 import { UserData, QuestionnaireResponse, Question } from '../types';
@@ -66,19 +67,26 @@ export const QuestionnairePage: React.FC = () => {
     
     if (nextIndex >= allQuestions.length) {
       // Generate and save the plan
-      const plan = generateMarketingPlan(userData.responses);
-      savePlan(plan);
-      
-      // Mark questionnaire as completed
-      const updatedUserData = {
-        ...userData,
-        currentQuestionIndex: nextIndex,
-        completedSquares: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-        updatedAt: new Date().toISOString()
-      };
-      saveUserData(updatedUserData);
-      
-      navigate('/results');
+      generateMarketingPlan(userData.responses)
+        .then(plan => {
+          savePlan(plan);
+          
+          // Mark questionnaire as completed
+          const updatedUserData = {
+            ...userData,
+            currentQuestionIndex: nextIndex,
+            completedSquares: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+            updatedAt: new Date().toISOString()
+          };
+          saveUserData(updatedUserData);
+          
+          navigate('/results');
+        })
+        .catch(error => {
+          console.error('Failed to generate plan:', error);
+          // You could show an error message here
+          alert('Failed to generate plan. Please try again.');
+        });
     } else {
       const updatedUserData = {
         ...userData,
@@ -182,6 +190,7 @@ export const QuestionnairePage: React.FC = () => {
               </div>
             </Link>
             <div className="flex items-center space-x-4">
+              <ApiStatus />
               <div className="text-sm text-gray-600 font-medium bg-gray-100 px-4 py-2 rounded-full">
                 Question {currentQuestionIndex + 1} of {allQuestions.length}
               </div>

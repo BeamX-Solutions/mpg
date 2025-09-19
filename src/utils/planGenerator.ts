@@ -1,7 +1,22 @@
 import { QuestionnaireResponse, MarketingPlan } from '../types';
 import { marketingSquares } from '../data/marketingSquares';
+import { apiService } from '../services/apiService';
 
-export const generateMarketingPlan = (responses: QuestionnaireResponse[]): MarketingPlan => {
+export const generateMarketingPlan = async (responses: QuestionnaireResponse[]): Promise<MarketingPlan> => {
+  try {
+    // Try to generate plan using the backend API
+    console.log('Attempting to generate plan via API...');
+    const result = await apiService.generatePlan(responses);
+    console.log('Plan generated successfully via API');
+    return result.plan;
+  } catch (error) {
+    console.warn('API generation failed, falling back to local generation:', error);
+    // Fall back to local generation if API fails
+    return generateLocalPlan(responses);
+  }
+};
+
+const generateLocalPlan = (responses: QuestionnaireResponse[]): MarketingPlan => {
   const getResponseValue = (questionId: string): string | string[] => {
     const response = responses.find(r => r.questionId === questionId);
     return response?.answer || '';
